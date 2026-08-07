@@ -32,7 +32,7 @@ export default function Video() {
       >
         <div className="relative aspect-video w-full bg-black">
           <Image
-            src="/legend-hall.png" 
+            src="/images/legend-hall.png" 
             alt="Legend Lagos Airport Event Showcase"
             fill
             sizes="(max-width: 1440px) 100vw, 1440px"

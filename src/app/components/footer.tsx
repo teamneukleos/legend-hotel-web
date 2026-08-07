@@ -73,7 +73,7 @@ export default function Footer() {
         <div className="flex justify-center sm:justify-center">
           <Link href="#home" aria-label="Legend Lagos Airport">
             <Image
-              src="/legend-logo-white.png"
+              src="/images/legend-logo-white.png"
               alt="Legend Lagos Airport"
               width={180}
               height={80}

@@ -11,7 +11,7 @@ export default function Hero() {
       className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-black"
     >
       <Image
-        src="/hero-bg.png" 
+        src="/images/hero-bg.png" 
         alt="Legend Lagos Airport Event Hall Background"
         fill
         priority

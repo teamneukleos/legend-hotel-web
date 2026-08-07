@@ -17,7 +17,6 @@ export default function Navbar() {
 
   return (
     <header className="fixed left-0 top-0 z-50 w-full bg-white">
-      {/* Increased height from h-[90px] to h-[120px] */}
       <nav className="mx-auto flex h-[120px] w-full max-w-[1440px] items-center justify-between px-6 md:px-10 lg:px-12">
         
         {/* Logo */}
@@ -28,7 +27,7 @@ export default function Navbar() {
         >
           {/* Maintained proportions but scaled layout box sizes slightly if needed */}
           <Image
-            src="/legend-logo.png"
+            src="/images/legend-logo.png"
             alt="Legend Lagos Airport"
             width={150}
             height={65}

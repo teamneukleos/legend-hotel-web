@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 
@@ -10,13 +9,11 @@ export default function Hero() {
       id="home"
       className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-black"
     >
-      <Image
+      {/* Standard HTML img configured to perfectly fill the absolute background plane */}
+      <img
         src="/images/hero-bg.png" 
         alt="Legend Lagos Airport Event Hall Background"
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover object-center"
+        className="absolute inset-0 h-full w-full object-cover object-center"
       />
 
       {/* Dark Overlay */}

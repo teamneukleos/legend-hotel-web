@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { Menu, X, ArrowUpRight } from "lucide-react";
@@ -25,13 +24,11 @@ export default function Navbar() {
           className="relative z-50 flex shrink-0 items-center"
           onClick={() => setIsOpen(false)}
         >
-          {/* Maintained proportions but scaled layout box sizes slightly if needed */}
-          <Image
+          <img
             src="/images/legend-logo.png"
             alt="Legend Lagos Airport"
             width={150}
             height={65}
-            priority
             className="h-auto w-[125px] md:w-[140px]"
           />
         </Link>

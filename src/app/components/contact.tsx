@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 
 const hallImages = [
@@ -141,12 +140,11 @@ export default function Contact() {
               transition={{ duration: 0.9, ease: "easeInOut" }}
               className="absolute inset-0"
             >
-              <Image
+              {/* Corrected: Replaced NextJS props with absolute sizing classes */}
+              <img
                 src={hallImages[activeImage]}
                 alt="Legend Hall"
-                fill
-                className="object-cover"
-                priority={activeImage === 0}
+                className="absolute inset-0 h-full w-full object-cover object-center"
               />
             </motion.div>
           </AnimatePresence>
@@ -157,6 +155,7 @@ export default function Contact() {
             {hallImages.map((_, i) => (
               <button
                 key={i}
+                type="button"
                 onClick={() => setActiveImage(i)}
                 aria-label={`Show hall image ${i + 1}`}
                 className={`h-1.5 rounded-full transition-all ${

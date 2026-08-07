@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
@@ -27,16 +26,14 @@ export default function Video() {
         style={{
           scale,
           width: containerWidth,
-        }}
+        }} 
         className="mx-auto overflow-hidden will-change-transform shadow-2xl"
       >
         <div className="relative aspect-video w-full bg-black">
-          <Image
+          <img
             src="/images/legend-hall.png" 
             alt="Legend Lagos Airport Event Showcase"
-            fill
-            sizes="(max-width: 1440px) 100vw, 1440px"
-            className="object-cover object-center"
+            className="absolute inset-0 h-full w-full object-cover object-center"
           />
         </div>
       </motion.div>

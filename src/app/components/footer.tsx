@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 
@@ -70,9 +69,9 @@ export default function Footer() {
     <footer className="bg-[#222222] text-white">
       <div className="mx-auto w-full max-w-[1400px] px-6 py-16 md:px-10 lg:px-12 lg:py-20">
         {/* Logo */}
-        <div className="flex justify-center sm:justify-center">
+        <div className="flex justify-center">
           <Link href="#home" aria-label="Legend Lagos Airport">
-            <Image
+            <img
               src="/images/legend-logo-white.png"
               alt="Legend Lagos Airport"
               width={180}
@@ -85,10 +84,10 @@ export default function Footer() {
         {/* Divider */}
         <div className="mt-12 border-t border-neutral-700" />
 
-        {/* Footer Columns */}
-        <div className="mt-12 grid grid-cols-1 gap-y-10 text-center sm:grid-cols-2 sm:text-left lg:grid-cols-4 lg:divide-x lg:divide-neutral-700">
+        {/* Footer Columns - Swapped text-left overrides to strict global centering */}
+        <div className="mt-12 grid grid-cols-1 gap-y-10 text-center sm:grid-cols-3 lg:divide-x lg:divide-neutral-700">
           {/* Location */}
-          <FooterColumn label="Location">
+          <FooterColumn label="Location" center>
             <p className="text-sm leading-6 text-neutral-300">
               Murtala Muhammed International Airport,
               <br />
@@ -96,28 +95,11 @@ export default function Footer() {
             </p>
           </FooterColumn>
 
-          {/* Phone */}
-          <FooterColumn label="Phone" center>
-            <a
-              href="tel:+2340000000000"
-              className="text-sm text-neutral-300 transition-colors hover:text-white"
-            >
-              +234 XXX XXX XXXX
-            </a>
-          </FooterColumn>
-
           {/* Reservations */}
           <FooterColumn label="Reservations" center>
             <a
-              href="tel:+2340000000000"
-              className="block text-sm text-neutral-300 transition-colors hover:text-white"
-            >
-              +234 XXX XXX XXXX
-            </a>
-
-            <a
               href="mailto:reservations@legendhotel.com"
-              className="mt-2 block text-sm text-neutral-300 transition-colors hover:text-white"
+              className="text-sm text-neutral-300 transition-colors hover:text-white"
             >
               reservations@legendhotel.com
             </a>
@@ -125,7 +107,7 @@ export default function Footer() {
 
           {/* Socials */}
           <FooterColumn label="Follow Us" center>
-            <div className="flex items-center justify-center gap-5 sm:justify-start lg:justify-center">
+            <div className="flex items-center justify-center gap-5">
               {socials.map(({ href, label, icon }) => (
                 <Link
                   key={label}
@@ -171,7 +153,7 @@ function FooterColumn({
   return (
     <div
       className={`px-4 first:pl-0 last:pr-0 ${
-        center ? "lg:flex lg:flex-col lg:items-center lg:text-center" : ""
+        center ? "flex flex-col items-center text-center" : ""
       }`}
     >
       <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-white">

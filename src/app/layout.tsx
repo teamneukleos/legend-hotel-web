@@ -1,18 +1,17 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import SmoothScroll from "./components/smoothscroll";
 
-// Configure Calibri from your public folder structure
 const calibri = localFont({
   src: [
     {
-      path: "/fonts/Calibri.woff2", // Points directly to public/fonts/Calibri.woff2
+      path: "/fonts/Calibri.woff2", 
       weight: "400",
       style: "normal",
     },
     {
-      path: "/fonts/Calibri-Bold.woff2", // Points directly to public/fonts/Calibri-Bold.woff2
-      weight: "700",
+      path: "/fonts/Calibri-Bold.woff2", 
       style: "normal",
     },
   ],
@@ -35,7 +34,9 @@ export default function RootLayout({ children }: LayoutProps) {
       className={`${calibri.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <SmoothScroll>
         {children}
+        </SmoothScroll>
       </body>
     </html>
   );

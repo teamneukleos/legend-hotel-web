@@ -1,0 +1,205 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import { AnimatePresence, motion } from "framer-motion";
+
+const hallImages = [
+  "/hall-1.png",
+  "/hall-2.png",
+  "/hall-3.png",
+  "/hall-4.png",
+];
+
+const eventTypes = [
+  "Wedding",
+  "Conference / Meeting",
+  "Corporate Event",
+  "Product Launch",
+  "Birthday / Private Party",
+  "Other",
+];
+
+type FormState = {
+  name: string;
+  email: string;
+  eventDate: string;
+  eventType: string;
+  phone: string;
+};
+
+const initialState: FormState = {
+  name: "",
+  email: "",
+  eventDate: "",
+  eventType: "",
+  phone: "",
+};
+
+export default function Contact() {
+  const [form, setForm] = useState<FormState>(initialState);
+  const [activeImage, setActiveImage] = useState(0);
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveImage((prev) => (prev + 1) % hallImages.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("submitting");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error("Failed");
+      setStatus("success");
+      setForm(initialState);
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  return (
+    <section id="contact" className="bg-white">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 lg:grid-cols-2">
+        {/* Form */}
+        <div className="flex flex-col justify-center px-6 py-16 sm:px-10 lg:px-16">
+          <h2 className="font-serif text-3xl sm:text-4xl text-black">
+            Host Your Event At Legend
+          </h2>
+          <p className="mt-4 max-w-md text-sm sm:text-base text-neutral-500">
+            Tell us about your event and our team will reach out to confirm
+            availability and walk you through the hall.
+          </p>
+
+          <form onSubmit={handleSubmit} className="mt-10 space-y-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-8">
+              <Field label="Full Name" name="name" value={form.name} onChange={handleChange} required />
+              <Field label="Email Address" name="email" type="email" value={form.email} onChange={handleChange} required />
+              <Field label="Date of Event" name="eventDate" type="date" value={form.eventDate} onChange={handleChange} required />
+
+              <div>
+                <label htmlFor="eventType" className="block text-xs uppercase tracking-widest text-neutral-500">
+                  Type of Event <span className="text-black">*</span>
+                </label>
+                <select
+                  id="eventType"
+                  name="eventType"
+                  required
+                  value={form.eventType}
+                  onChange={handleChange}
+                  className="mt-2 w-full border-b border-neutral-300 bg-transparent py-2 text-black focus:border-black focus:outline-none"
+                >
+                  <option value="" disabled>Select event type</option>
+                  {eventTypes.map((type) => (
+                    <option key={type} value={type}>{type}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <Field label="Phone Number" name="phone" type="tel" value={form.phone} onChange={handleChange} required />
+
+            <button
+              type="submit"
+              disabled={status === "submitting"}
+              className="inline-flex items-center gap-2 bg-black px-8 py-3 text-xs uppercase tracking-widest text-white transition hover:bg-neutral-800 disabled:opacity-50"
+            >
+              {status === "submitting" ? "Sending..." : "Send Enquiry"}
+              <span aria-hidden>→</span>
+            </button>
+
+            {status === "success" && (
+              <p className="text-sm text-neutral-600">Thank you. A member of our team will be in touch shortly.</p>
+            )}
+            {status === "error" && (
+              <p className="text-sm text-red-600">Something went wrong. Please try again or call us directly.</p>
+            )}
+          </form>
+        </div>
+
+        {/* Fade carousel */}
+        <div className="relative h-72 sm:h-96 lg:h-auto overflow-hidden">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeImage}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.9, ease: "easeInOut" }}
+              className="absolute inset-0"
+            >
+              <Image
+                src={hallImages[activeImage]}
+                alt="Legend Hall"
+                fill
+                className="object-cover"
+                priority={activeImage === 0}
+              />
+            </motion.div>
+          </AnimatePresence>
+
+          <div className="absolute inset-0 bg-black/20" />
+
+          <div className="absolute bottom-6 left-1/2 flex -translate-x-1/2 gap-2">
+            {hallImages.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setActiveImage(i)}
+                aria-label={`Show hall image ${i + 1}`}
+                className={`h-1.5 rounded-full transition-all ${
+                  i === activeImage ? "w-6 bg-white" : "w-1.5 bg-white/50"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Field({
+  label,
+  name,
+  type = "text",
+  value,
+  onChange,
+  required,
+}: {
+  label: string;
+  name: string;
+  type?: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  required?: boolean;
+}) {
+  return (
+    <div>
+      <label htmlFor={name} className="block text-xs uppercase tracking-widest text-neutral-500">
+        {label} {required && <span className="text-black">*</span>}
+      </label>
+      <input
+        id={name}
+        name={name}
+        type={type}
+        required={required}
+        value={value}
+        onChange={onChange}
+        className="mt-2 w-full border-b border-neutral-300 bg-transparent py-2 text-black placeholder-neutral-400 focus:border-black focus:outline-none"
+      />
+    </div>
+  );
+}

@@ -9,7 +9,6 @@ export default function Hero() {
       id="home"
       className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-black"
     >
-      {/* Standard HTML img configured to perfectly fill the absolute background plane */}
       <img
         src="/images/hero-bg.png" 
         alt="Legend Lagos Airport Event Hall Background"

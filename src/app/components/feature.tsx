@@ -49,7 +49,7 @@ const fadeUp = {
 
 export default function Features() {
   return (
-    <section className="bg-white py-20 sm:py-28">
+    <section id="features" className="bg-white py-20 sm:py-28">
       <div className="mx-auto max-w-4xl px-6 text-center">
         <motion.h2
           initial={{ opacity: 0, y: 16 }}

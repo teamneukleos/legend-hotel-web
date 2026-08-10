@@ -23,3 +23,7 @@ html, body {
   color: var(--foreground);
   font-family: var(--font-calibri), "Calibri", Arial, Helvetica, sans-serif !important;
 }
+
+html {
+  scroll-behavior: smooth;
+}

@@ -99,12 +99,7 @@ export default function Features() {
         })}
       </div>
 
-      <p className="mt-16 text-center text-sm text-neutral-500">
-        Should you need more information, please call:{" "}
-        <a href="tel:+8441800XXXX" className="font-medium text-black">
-          (+844) 1800 XXXX
-        </a>
-      </p>
+      
     </section>
   );
 }

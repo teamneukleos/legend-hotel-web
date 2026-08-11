@@ -44,16 +44,7 @@ export default function Navbar() {
             </Link>
           ))}
 
-          {/* CTA */}
-          <Link
-            href="#contact"
-            className="ml-2 flex items-center gap-2 bg-[#222] px-7 py-4 text-[13px] font-bold uppercase tracking-[0.12em] text-white transition-all duration-300 hover:bg-[#777]"
-          >
-            Enquire Now
-            <ArrowUpRight size={16} strokeWidth={1.8} />
-          </Link>
         </div>
-
         {/* Mobile Menu Button */}
         <button
           type="button"
@@ -91,14 +82,7 @@ export default function Navbar() {
               </Link>
             ))}
 
-            <Link
-              href="#contact"
-              onClick={() => setIsOpen(false)}
-              className="mt-6 flex items-center justify-center gap-2 bg-[#222] px-6 py-4 text-[13px] font-bold uppercase tracking-[0.12em] text-white"
-            >
-              Enquire Now
-              <ArrowUpRight size={16} strokeWidth={1.8} />
-            </Link>
+            
           </div>
         </div>
       </div>

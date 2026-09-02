@@ -46,7 +46,7 @@ export default function Hero() {
           href="#contact"
           className="group mt-9 inline-flex items-center gap-3 bg-white px-7 py-4 text-xs font-bold uppercase tracking-[0.18em] text-black transition-all duration-300 hover:bg-[#d9d9d9] sm:px-8 sm:py-5"
         >
-          Enquire About the Hall
+          Enquire Below
           <ArrowUpRight
             size={16}
             strokeWidth={1.7}

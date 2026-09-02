@@ -47,7 +47,7 @@ export default function Hero() {
           className="group mt-9 inline-flex items-center gap-3 bg-white px-7 py-4 text-xs font-bold uppercase tracking-[0.18em] text-black transition-all duration-300 hover:bg-[#d9d9d9] sm:px-8 sm:py-5"
         >
           Enquire Below
-          <ArrowUpRight
+          <ArrowDown
             size={16}
             strokeWidth={1.7}
             className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"

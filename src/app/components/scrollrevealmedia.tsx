@@ -1,8 +1,7 @@
 // components/ScrollRevealMedia.tsx
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
 
 type ScrollRevealMediaProps = {
   src: string;
@@ -10,42 +9,32 @@ type ScrollRevealMediaProps = {
   label?: string;
 };
 
-export default function ScrollRevealMedia({ src, alt, label }: ScrollRevealMediaProps) {
-  const ref = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start 85%", "center center"],
-  });
-
-  const scale = useTransform(scrollYProgress, [0, 1], [0.72, 1]);
-  const containerWidth = useTransform(scrollYProgress, [0, 1], ["85%", "100%"]);
-
+export default function ScrollRevealMedia({
+  src,
+  alt,
+  label,
+}: ScrollRevealMediaProps) {
   return (
-    <section
-      ref={ref}
-      className="relative z-10 w-full overflow-hidden py-12 md:py-20"
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="w-full"
     >
       {label && (
-        <p className="mx-auto mb-6 max-w-7xl px-6 text-center text-xs uppercase tracking-widest text-neutral-500">
+        <p className="mb-5 font-[Calibri] text-xs font-bold uppercase tracking-[0.25em] text-[#222]">
           {label}
         </p>
       )}
-      <motion.div
-        style={{
-          scale,
-          width: containerWidth,
-        }}
-        className="mx-auto overflow-hidden will-change-transform shadow-2xl"
-      >
-        <div className="relative aspect-video w-full bg-black">
-          <img
-            src={src}
-            alt={alt}
-            className="absolute inset-0 h-full w-full object-cover object-center"
-          />
-        </div>
-      </motion.div>
-    </section>
+
+      <div className="relative h-[320px] w-full overflow-hidden bg-neutral-900 sm:h-[420px] lg:h-[560px]">
+        <img
+          src={src}
+          alt={alt}
+          className="absolute inset-0 h-full w-full object-cover object-center transition-transform duration-700 hover:scale-[1.02]"
+        />
+      </div>
+    </motion.div>
   );
 }

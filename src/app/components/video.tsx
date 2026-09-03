@@ -1,42 +1,27 @@
+// components/video.tsx
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import ScrollRevealMedia from "./scrollrevealmedia";
 
 export default function Video() {
-  const ref = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start 85%", "center center"],
-  });
-
-  const scale = useTransform(scrollYProgress, [0, 1], [0.72, 1]);
-
-  const radius = useTransform(scrollYProgress, [0, 1], [36, 0]);
-
-  const containerWidth = useTransform(scrollYProgress, [0, 1], ["85%", "100%"]);
-
   return (
     <section
-      ref={ref}
-      className="relative z-10 w-full overflow-hidden py-12 md:py-20"
+      id="video"
+      className="relative z-10 w-full bg-white px-6 py-16 md:px-10 md:py-20 lg:px-14 lg:py-24"
     >
-      <motion.div
-        style={{
-          scale,
-          width: containerWidth,
-        }} 
-        className="mx-auto overflow-hidden will-change-transform shadow-2xl"
-      >
-        <div className="relative aspect-video w-full bg-black">
-          <img
-            src="/images/legend-hall.png" 
-            alt="Legend Lagos Airport Event Showcase"
-            className="absolute inset-0 h-full w-full object-cover object-center"
-          />
-        </div>
-      </motion.div>
+      <div className="mx-auto grid w-full max-w-[1600px] grid-cols-1 gap-10 md:grid-cols-2 md:gap-8 lg:gap-10">
+        <ScrollRevealMedia
+          src="/images/legend-hall.png"
+          alt="Legend Lagos Airport Event Showcase"
+          label="Our Hall"
+        />
+
+        <ScrollRevealMedia
+          src="/images/legend-room.png"
+          alt="Legend Lagos Airport Room Showcase"
+          label="Our Rooms"
+        />
+      </div>
     </section>
   );
 }

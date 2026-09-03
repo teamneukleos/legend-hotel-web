@@ -103,28 +103,34 @@ export default function Contact() {
     setRoomForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus("submitting");
-    const payload =
-      bookingType === "hall"
-        ? { type: "hall", ...hallForm }
-        : { type: "room", ...roomForm };
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      if (!res.ok) throw new Error("Failed");
-      setStatus("success");
-      bookingType === "hall"
-        ? setHallForm(initialHallState)
-        : setRoomForm(initialRoomState);
-    } catch {
-      setStatus("error");
-    }
-  };
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  setStatus("submitting");
+
+  const payload =
+    bookingType === "hall"
+      ? { type: "hall", ...hallForm }
+      : { type: "room", ...roomForm };
+
+  try {
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!res.ok) throw new Error("Failed");
+
+    setStatus("success");
+
+    bookingType === "hall"
+      ? setHallForm(initialHallState)
+      : setRoomForm(initialRoomState);
+  } catch {
+    setStatus("error");
+  }
+};
 
   return (
     <section id="contact" className="bg-white">

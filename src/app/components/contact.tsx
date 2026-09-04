@@ -70,6 +70,12 @@ const initialRoomState: RoomFormState = {
   phone: "",
 };
 
+declare global {
+  interface Window {
+    fbq?: (...args: any[]) => void;
+  }
+}
+
 export default function Contact() {
   const [bookingType, setBookingType] = useState<BookingType>("hall");
   const [hallForm, setHallForm] = useState<HallFormState>(initialHallState);
@@ -103,34 +109,41 @@ export default function Contact() {
     setRoomForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-  setStatus("submitting");
+    setStatus("submitting");
 
-  const payload =
-    bookingType === "hall"
-      ? { type: "hall", ...hallForm }
-      : { type: "room", ...roomForm };
+    const payload =
+      bookingType === "hall"
+        ? { type: "hall", ...hallForm }
+        : { type: "room", ...roomForm };
 
-  try {
-    const res = await fetch("/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
-    if (!res.ok) throw new Error("Failed");
+      if (!res.ok) throw new Error("Failed");
 
-    setStatus("success");
+      setStatus("success");
 
-    bookingType === "hall"
-      ? setHallForm(initialHallState)
-      : setRoomForm(initialRoomState);
-  } catch {
-    setStatus("error");
-  }
-};
+      // Meta Pixel: track successful enquiry as a Lead
+      if (typeof window !== "undefined" && window.fbq) {
+        window.fbq("track", "Lead", {
+          content_name: bookingType === "hall" ? "Hall Enquiry" : "Room Enquiry",
+        });
+      }
+
+      bookingType === "hall"
+        ? setHallForm(initialHallState)
+        : setRoomForm(initialRoomState);
+    } catch {
+      setStatus("error");
+    }
+  };
 
   return (
     <section id="contact" className="bg-white">

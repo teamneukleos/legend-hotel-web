@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Script from "next/script";
 import "./globals.css";
+import MetaPixel from "./components/metapixel";
+import LinkedInInsight from "./components/linkedininsight";
 import SmoothScroll from "./components/smoothscroll";
 
-const GTM_ID = "GTM-5V2GLW54";
+const GTM_ID = "GTM-WWXMW89P";
 
 const calibri = localFont({
   src: [
@@ -45,6 +47,8 @@ export default function RootLayout({ children }: LayoutProps) {
         `}</Script>
       </head>
       <body className="min-h-full flex flex-col">
+        <MetaPixel />
+        <LinkedInInsight />
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe

@@ -5,6 +5,8 @@ import "./globals.css";
 import MetaPixel from "./components/metapixel";
 import LinkedInInsight from "./components/linkedininsight";
 import SmoothScroll from "./components/smoothscroll";
+import Navbar from "./components/navbar";
+import Footer from "./components/footer"; 
 
 const GTM_ID = "GTM-WWXMW89P";
 
@@ -25,8 +27,7 @@ const calibri = localFont({
 
 export const metadata: Metadata = {
   title: "Legend Hotel | Lagos Airport Event Hall",
-  description:
-    "Host weddings, conferences, and celebrations at Legend Hotel's event hall near Lagos Airport — elegant space, attentive service, and a setting made for memorable occasions.",
+  description: "Host weddings, conferences, and celebrations at Legend Hotel's event hall near Lagos Airport — elegant space, attentive service, and a setting made for memorable occasions.",
 };
 
 interface LayoutProps {
@@ -46,9 +47,11 @@ export default function RootLayout({ children }: LayoutProps) {
           })(window,document,'script','dataLayer','${GTM_ID}');
         `}</Script>
       </head>
+      
       <body className="min-h-full flex flex-col">
         <MetaPixel />
         <LinkedInInsight />
+        
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe
@@ -58,7 +61,14 @@ export default function RootLayout({ children }: LayoutProps) {
             style={{ display: "none", visibility: "hidden" }}
           />
         </noscript>
-        <SmoothScroll>{children}</SmoothScroll>
+
+        <Navbar />
+
+        <main className="flex-grow">
+          <SmoothScroll>{children}</SmoothScroll>
+        </main>
+
+        <Footer />
       </body>
     </html>
   );

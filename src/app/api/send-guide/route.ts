@@ -13,9 +13,14 @@ export async function POST(req: Request) {
 
   const gmailUser = process.env.GMAIL_USER;
   const gmailPass = process.env.GMAIL_APP_PASSWORD;
+  const scriptUrl = process.env.GOOGLE_SCRIPT_URL;
 
   if (!gmailUser || !gmailPass) {
     return NextResponse.json({ error: "Email not configured" }, { status: 500 });
+  }
+
+  if (!scriptUrl) {
+    return NextResponse.json({ error: "Sheet not configured" }, { status: 500 });
   }
 
   const pdfPath = path.join(
@@ -38,6 +43,30 @@ export async function POST(req: Request) {
   });
 
   try {
+    const sheetRes = await fetch(scriptUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        formType: "guide",
+        firstName,
+        lastName,
+        email,
+        phone,
+        companyName,
+        jobTitle,
+      }),
+      redirect: "follow",
+    });
+
+    if (!sheetRes.ok) {
+      return NextResponse.json(
+        { error: "Sheet write failed" },
+        { status: 502 }
+      );
+    }
+
     await transporter.sendMail({
       from: `"Legend Lagos Airport" <${gmailUser}>`,
       to: email,
@@ -51,11 +80,9 @@ export async function POST(req: Request) {
       ],
     });
 
-
-
     return NextResponse.json({ ok: true });
   } catch (err) {
-    console.error("Email send failed:", err);
+    console.error("Event planning kit submit failed:", err);
     return NextResponse.json({ error: "Failed to send email" }, { status: 502 });
   }
 }
